@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffd9e8">
+  <title>How well do you know your Rediah?</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap" rel="stylesheet">
+  <!-- load the gif early so its ready when loading start -->
+  <link rel="preload" as="image" href="assets/image_28.gif">
+
+  <style>
+    :root {
+      --bg: #fff0f6;
+      --ink: #3b1a2b;
+      --mute: #7a4f65;
+      --jade: #c2255c;
+      --gold: #8e2a5c;
+      --card: #ffd9e8;
+      --pane: #ffffff;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top,0px);
+      padding-bottom: env(safe-area-inset-bottom,0px);
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #2a0f20;
+        --ink: #ffeaf3;
+        --mute: #e0aec4;
+        --jade: #ff7fb2;
+        --gold: #ffc4de;
+        --card: #41192f;
+        --pane: #5a2542;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #2a0f20;
+      --ink: #ffeaf3;
+      --mute: #e0aec4;
+      --jade: #ff7fb2;
+      --gold: #ffc4de;
+      --card: #41192f;
+      --pane: #5a2542;
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top,0px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 28px 18px 230px;
+    }
+
+    h1,h2,.q,.score {
+      font-family: 'Momo Signature',cursive,sans-serif;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-size: clamp(2rem,8vw,2.8rem);
+      line-height: 1.1;
+      margin: 40px 0 8px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 24px 0 10px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    .mute {
+      color: var(--mute);
+    }
+
+    .quiz {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px 16px;
+      margin-top: 22px;
+    }
+
+    .q {
+      font-size: 1.3rem;
+      margin: 0 0 12px;
+    }
+
+    .prog {
+      color: var(--mute);
+      font-size: .85rem;
+      margin: 0 0 4px;
+    }
+
+    .opts {
+      display: grid;
+      gap: 8px;
+    }
+
+    .opts button,.next {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .opts button {
+      text-align: left;
+      border: 1px solid transparent;
+      background: var(--pane);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .opts button:hover {
+      border-color: var(--jade);
+    }
+
+    /* answers that are pictures */
+    .opts.pics {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .opts button.withimg {
+      padding: 6px;
+      text-align: center;
+    }
+
+    .opts button.withimg img {
+      display: block;
+      width: 100%;
+      max-height: 180px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .opts button.withimg span {
+      display: block;
+      margin-top: 4px;
+      font-size: .85rem;
+    }
+
+    .opts button.ok {
+      background: var(--jade);
+      color: var(--bg);
+    }
+
+    .opts button.no {
+      opacity: .55;
+    }
+
+    /* text box question */
+    .txt {
+      display: flex;
+      gap: 8px;
+    }
+
+    .txt input {
+      flex: 1;
+      min-width: 0;
+      font: inherit;
+      color: var(--ink);
+      background: var(--pane);
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .txt input:focus {
+      outline: none;
+      border-color: var(--jade);
+    }
+
+    .txt button {
+      font: inherit;
+      cursor: pointer;
+      border: 0;
+      border-radius: 12px;
+      padding: 0 18px;
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    .fb {
+      min-height: 1.5em;
+      margin: 10px 0 0;
+    }
+
+    .next {
+      margin-top: 10px;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 18px;
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    .again {
+      margin-top: 16px;
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--jade);
+    }
+
+    button:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .hearts {
+      float: right;
+      letter-spacing: 3px;
+      color: var(--jade);
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .hearts .lost {
+      opacity: .25;
+    }
+
+    .reward {
+      margin: 14px 0 6px;
+    }
+
+    .reward img {
+      max-width: 100%;
+      border-radius: 12px;
+      display: block;
+      margin: 10px 0;
+    }
+
+    .reward audio {
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    /* time bar */
+    .tbar {
+      height: 6px;
+      background: var(--pane);
+      border-radius: 3px;
+      margin: 0 0 14px;
+      overflow: hidden;
+    }
+
+    .tbar i {
+      display: block;
+      height: 100%;
+      width: 100%;
+      background: var(--jade);
+    }
+
+    .tbar.low i {
+      background: #e03131;
+    }
+
+    /* start screen */
+    #startWrap {
+      min-height: calc(100vh - 56px);
+      min-height: calc(100svh - 56px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #tag {
+      font-size: clamp(2.8rem,13vw,5.5rem);
+      line-height: 1.08;
+      margin: 0 0 16px;
+    }
+
+    #stats {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    #startWrap .next {
+      margin-top: 34px;
+      padding: 16px 60px;
+      font-size: 1.6rem;
+    }
+
+    /* leaderboard */
+    .lbh {
+      font-size: 1.1rem;
+      margin: 20px 0 4px;
+    }
+
+    .board {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .board li {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--pane);
+    }
+
+    .board .me {
+      color: var(--jade);
+      font-weight: 600;
+    }
+
+    .board small {
+      color: var(--mute);
+      font-weight: 400;
+    }
+
+    /* loading screen */
+    #loadWrap {
+      position: fixed;
+      inset: 0;
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: #000;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    #loadWrap.gone {
+      display: none;
+    }
+
+    #loadWrap::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 34%;
+      background: linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,0));
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #loadStage {
+      display: none;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      box-shadow: none;
+      margin: 0;
+      line-height: 0;
+      background: #000;
+    }
+
+    #loadImg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    @media (max-aspect-ratio:1/1) {
+      #loadImg {
+        object-fit: contain;
+      }
+    }
+
+    #loadFly {
+      display: none;
+      position: absolute;
+      left: 38.73%;
+      top: 32.11%;
+      width: 32.19%;
+      height: 64.22%;
+      transform-origin: 50% 85%;
+    }
+
+    /* brown puff when she launch */
+    .puff {
+      position: absolute;
+      width: 13%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%,#d9bd85,#9a7a46 70%);
+      opacity: 0;
+      filter: blur(1px);
+    }
+
+    .puff.go {
+      animation: puff var(--pd,1s) ease-out var(--pl,0s) forwards;
+    }
+
+    @keyframes puff {
+      0% {
+        opacity: .95;
+        transform: translate(-50%,-50%) scale(.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(2.8);
+      }
+    }
+
+    @keyframes rum1 {
+      0%,100% {
+        transform: translate(0,0);
+      }
+      25% {
+        transform: translate(1px,-1px);
+      }
+      50% {
+        transform: translate(-1px,1px);
+      }
+      75% {
+        transform: translate(1px,1px);
+      }
+    }
+
+    @keyframes rum2 {
+      0%,100% {
+        transform: translate(0,0) rotate(0);
+      }
+      20% {
+        transform: translate(3px,-2px) rotate(.6deg);
+      }
+      40% {
+        transform: translate(-3px,2px) rotate(-.6deg);
+      }
+      60% {
+        transform: translate(2px,3px) rotate(.4deg);
+      }
+      80% {
+        transform: translate(-2px,-3px) rotate(-.4deg);
+      }
+    }
+
+    @keyframes shk {
+      0%,100% {
+        transform: translate(0,0);
+      }
+      25% {
+        transform: translate(2px,1px);
+      }
+      50% {
+        transform: translate(-2px,-1px);
+      }
+      75% {
+        transform: translate(1px,-2px);
+      }
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translate(0,0) scale(1);
+      }
+      14% {
+        transform: translate(0,3%) scale(1.03,.94);
+      }
+      100% {
+        transform: translate(0,-210%) scale(1);
+      }
+    }
+
+    @media (prefers-reduced-motion:no-preference) {
+      #loadFly.r1 {
+        animation: rum1 .09s linear infinite;
+      }
+      #loadFly.r2 {
+        animation: rum2 .07s linear infinite;
+      }
+      #loadStage.r2 {
+        animation: shk .08s linear infinite;
+      }
+      #loadFly.blast {
+        animation: fly var(--fly,1s) cubic-bezier(.4,0,.9,.5) forwards;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      #loadFly.blast {
+        opacity: 0;
+      }
+    }
+
+    #loadTxt {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(58px + env(safe-area-inset-bottom,0px));
+      z-index: 2;
+      margin: 0;
+      padding: 0 18px;
+      font-size: 1.3rem;
+      min-height: 1.5em;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.9);
+    }
+
+    #loadWrap .tbar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(30px + env(safe-area-inset-bottom,0px));
+      z-index: 2;
+      width: min(420px,72%);
+      margin: 0;
+      background: rgba(255,255,255,.25);
+    }
+
+    #loadBar {
+      width: 0;
+    }
+
+    /* mute button top right */
+    #muteBtn {
+      position: fixed;
+      top: calc(10px + env(safe-area-inset-top,0px));
+      right: 12px;
+      z-index: 30;
+      font: inherit;
+      font-size: .8rem;
+      cursor: pointer;
+      border: 1px solid var(--jade);
+      background: var(--bg);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 4px 11px;
+    }
+
+    .score {
+      font-size: 3rem;
+      color: var(--jade);
+      line-height: 1;
+      margin: 0 0 8px;
+    }
+
+    /* pick bodo screen */
+    .pick {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .pick button {
+      font: inherit;
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--pane);
+      border: 1px solid transparent;
+      border-radius: 16px;
+      padding: 12px 8px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .pick button:hover {
+      border-color: var(--jade);
+    }
+
+    .pick img,#bodoImg {
+      image-rendering: pixelated;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .pick img {
+      height: clamp(150px,38vw,210px);
+      width: auto;
+      margin-bottom: 8px;
+    }
+
+    #pickWrap {
+      text-align: center;
+      min-height: 62vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #pickWrap.gone {
+      display: none;
+    }
+
+    #quizWrap {
+      display: none;
+    }
+
+    /* bodo in the corner */
+    #bodo {
+      position: fixed;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom,0px));
+      z-index: 20;
+      display: none;
+      align-items: flex-end;
+      gap: 8px;
+      max-width: calc(100% - 24px);
+    }
+
+    #bubble {
+      background: var(--pane);
+      border-radius: 14px;
+      padding: 9px 12px;
+      font-size: .9rem;
+      line-height: 1.3;
+      max-width: min(230px,52vw);
+      margin-bottom: 34px;
+    }
+
+    #bodoBtn {
+      border: 0;
+      background: var(--pane);
+      box-shadow: 0 1px 6px rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding: 6px;
+      cursor: pointer;
+      flex: none;
+    }
+
+    #bodoImg {
+      height: 104px;
+      width: auto;
+    }
+
+    @media (prefers-reduced-motion:no-preference) {
+      #bodoBtn.hop {
+        animation: hop .5s ease;
+      }
+      @keyframes hop {
+        30% {
+          transform: translateY(-14px);
+        }
+        60% {
+          transform: translateY(0);
+        }
+        80% {
+          transform: translateY(-5px);
+        }
+      }
+    }
+
+    /* video bg on score screen */
+    #scoreBg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .5;
+      image-rendering: pixelated;
+    }
+
+    /* game over screen */
+    #grave {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: #fff;
+      color: #1e1e1e;
+    }
+
+    #grave img,#grave video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      image-rendering: auto;
+    }
+
+    #grave .gmsg {
+      position: absolute;
+      left: 50%;
+      top: calc(6vh + env(safe-area-inset-top,0px));
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: calc(100% - 32px);
+      text-align: center;
+      padding: 0;
+      color: #1e1e1e;
+      text-shadow: 0 1px 0 #fff,0 0 12px #fff,0 0 24px rgba(255,255,255,.85);
+    }
+
+    #grave .gmsg .q {
+      font-size: clamp(2rem,8vw,3rem);
+      margin: 0 0 6px;
+    }
+
+    #grave .gmsg .next {
+      text-shadow: none;
+    }
+
+    @media (max-aspect-ratio:1/1) {
+      #grave img,#grave video {
+        object-fit: contain;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <video id="scoreBg" muted loop autoplay playsinline aria-hidden="true"></video>
+
+  <main>
+
+    <!-- start screen -->
+    <div id="startWrap">
+      <p class="q" id="tag">5 questions.<br>lock in please</p>
+      <p class="mute" id="stats"></p>
+      <button class="next" id="startBtn">start</button>
+    </div>
+
+    <!-- loading screen -->
+    <div id="loadWrap" class="gone">
+      <div id="loadStage">
+        <img id="loadImg" alt="">
+        <img id="loadFly" alt="">
+      </div>
+      <p class="q" id="loadTxt"></p>
+      <div class="tbar"><i id="loadBar"></i></div>
+    </div>
+
+    <!-- pick bodo -->
+    <div id="pickWrap" class="gone">
+      <h2>pick your bodo</h2>
+      <p class="mute">this is you for the quiz</p>
+      <div class="pick" id="pick">
+        <button data-k="hijab"><img id="pk1" alt="">Hijab Bodo <br>(no addidas sponsorship)</button>
+        <button data-k="towel"><img id="pk2" alt="">Towel Bodo</button>
+      </div>
+    </div>
+
+    <!-- the quiz goes in here -->
+    <div id="quizWrap">
+      <div class="quiz" id="quiz" aria-live="polite"></div>
+    </div>
+
+  </main>
+
+  <button id="muteBtn" type="button">sound on</button>
+
+  <!-- bodo in the corner -->
+  <div id="bodo">
+    <div id="bubble" aria-hidden="true"></div>
+    <button id="bodoBtn" aria-label="Switch Bodo"><img id="bodoImg" alt=""></button>
+  </div>
+
+  <script>
+    // ============ change this stuff for your own quiz ============
+
+    var QUIZ_NAME = "Rediah";
+
+    // bodo pictures. 12 for each one. the number is the pose (0 = wave, 2 = cheer ...)
+    var SPR = {
+      hijab: [
+        "assets/image_2.png", "assets/image_3.png", "assets/image_4.png", "assets/image_5.png",
+        "assets/image_6.png", "assets/image_7.png", "assets/image_8.png", "assets/image_9.png",
+        "assets/image_10.png", "assets/image_11.png", "assets/image_12.png", "assets/image_13.png"
+      ],
+      towel: [
+        "assets/image_14.png", "assets/image_15.png", "assets/image_16.png", "assets/image_17.png",
+        "assets/image_18.png", "assets/image_19.png", "assets/image_20.png", "assets/image_21.png",
+        "assets/image_22.png", "assets/image_23.png", "assets/image_24.png", "assets/image_25.png"
+      ]
+    };
+
+    // sounds. if you leave one empty it make a beep sound instead
+    // correct = coochie, wrong = awwwww, cry = score under 3 or game over, meh = score 3, happy = score 4 or 5, blast = fart on loading
+    var SOUNDS = {
+      correct: "assets/audio_1.mp3",
+      wrong: "assets/audio_2.mp3",
+      cry: "assets/audio_3.mp3",
+      meh: "assets/audio_4.mp3",
+      happy: "assets/audio_5.mp3",
+      blast: "assets/audio_6.mp3"
+    };
+
+    // music that loop in background. volume is 0 to 1, lower = more quiet
+    var BGM_SRC = "assets/audio_7.mp3";
+    var BGM_VOL = 0.15;
+
+    var LOAD_BG = "assets/image_26.jpg";
+    var LOAD_FLY = "assets/image_27.webp";
+    var LOAD_GIF = "assets/image_28.gif";
+
+    // loading screen after she press start
+    var LOADING = {
+      seconds: 6,            // how long it go. 0 = no loading screen
+      img: LOAD_GIF,         // the gif
+      fly: "",               // only fill this if you not using the gif
+      blastAt: 3.9,          // second in the gif when she launch
+      blastLead: 0.83,       // the fart file is quiet for first 0.83 sec so we play it earlier
+      lines: [
+        "loading rediah...",
+        "bodo is busy, hold on...",
+        "still in there...",
+        "uh oh...",
+        "ok she's gone. almost done"
+      ]
+    };
+
+    var TIME_LIMIT = 15;     // seconds for each question. 0 = no timer. time out count as wrong
+    var NEXT_DELAY = 1.2;    // seconds the next button stays locked after she answer. 0 = no wait
+    var MAX_WRONG = 4;       // this many wrong = game over. 3 wrong still finish the quiz
+
+    // extra thing on score screen. number = how many wrong (0 to 3). all optional
+    // text = message, img = picture link, audio = voice note link
+    var REWARDS = {
+      0: { text: "", img: "", audio: "" },
+      1: { text: "", img: "", audio: "" },
+      2: { text: "", img: "", audio: "" },
+      3: { text: "", img: "", audio: "" }
+    };
+
+    var CRY = "assets/image_29.png";    // hijab bodo picture for game over
+    var TOMB = "assets/image_30.png";   // the grave picture
+
+    // video behind the score screen. number = how many wrong. 4 or more is game over so no video
+    var BG = {
+      0: "https://images-ext-1.discordapp.net/external/aQciuCipgRQl-mJCtxe-ih512Q9fh45-Xbnr7U7OQw0/https/static.klipy.com/ii/f87f46a2c5aeaeed4c68910815f73eaf/92/ee/PkBd9hd9.mp4",
+      1: "https://images-ext-1.discordapp.net/external/j7cW7OlDmeiYuIfYENbFhn_M34dWJyczZ7u2KfcW4ZI/https/static.klipy.com/ii/d7aec6f6f171607374b2065c836f92f4/d6/95/bzXpv252XLUW0HphZgFv.mp4",
+      2: "https://images-ext-1.discordapp.net/external/DCovVv1NmYEQOTwtW9c_3KxhZGQsf0Jlr5l-I4YEkn0/https/static.klipy.com/ii/f87f46a2c5aeaeed4c68910815f73eaf/e0/3a/a4nYp6dI.mp4",
+      3: "https://images-ext-1.discordapp.net/external/a1pWJ3U0yE7NpYNNJYLTHIiAYdXiaeE58i_v8Wev2ok/https/static.klipy.com/ii/d70658e4be8be2e3047ca9c4e9597a13/b4/dd/rDbY3Y6K.mp4"
+    };
+
+    // a = which answer is right. start counting from 0
+    // t = own time for the question (optional)
+    //
+    // message at the bottom after she answer (all optional, first one found is used):
+    //   note on the option she picked    o: [{ text: "For Riamu", note: "..." }, ...]
+    //   right: "..."   when she right and the option have no note
+    //   wrong: "..."   when she wrong and the option have no note
+    //   late: "..."    when time run out
+    // if you dont write any, it say "correct" or "nope. it was ..."
+    //
+    // answers can be pictures too. put the picture in assets and write it like this:
+    //   o: [{ img: "assets/a.jpg" }, { img: "assets/b.jpg", label: "words" }, ...]
+    //
+    // TEXT BOX question (no o and no a):
+    //   { q: "...", type: "text", accept: ["0", "0/10"], right: "...", wrong: "..." }
+    //   accept = answers that count as right (not case sensitive). [] = anything is right
+    var QUIZ = [
+      {
+        q: "Is rediah gay?",
+        o: [
+          { text: "Yes(in general)", note: "so you think I'm gay" },
+          { text: "For Riamu", note: "well riamu is a big part of it, but no" },
+          { text: "For Shaifq", note: "nope" },
+          { text: "For Sylus", note: "would crack but no" },
+          { text: "All of the above", note: "awwww my sayang knows me well" }
+        ],
+        a: 4
+      },
+      {
+        q: "Which one of these reels did bodo not send to rediah",
+        o: [
+          { img: "reels/reel1.png", note: "so you hate me" },
+          { img: "reels/reel2.jpeg", note: "so you hate me" },
+          { img: "reels/reel3.jpeg", note: "" },
+          { img: "reels/reel4.jpeg", note: "so you hate me" }
+        ],
+        a: 0   // CHANGE THIS. which reel did bodo not send? 0 = reel1, 1 = reel2, 2 = reel3, 3 = reel4
+      },
+      {
+        q: "How crackable is Rediah",
+        type: "text",
+        accept: ["0", "0/10", "zero"],   // answers that count as right. [] = anything counts
+        right: "correct, no notes",
+        wrong: "nope. it was 0/10"
+      },
+      {
+        q: "What's the first thing I want to do when we finally meet?",
+        o: ["Hug you", "Eat together", "Walk around", "All of the above"],
+        a: 3
+      },
+      {
+        q: "How long was I your friend before I liked you?",
+        o: ["A few weeks", "A few months", "Most of the year", "From day one"],
+        a: 2
+      }
+    ];
+
+    // ============ the code, dont need to touch ============
+
+    document.title = "How well do you know your " + QUIZ_NAME + "?";
+
+    (function () {
+
+      function $(id) {
+        return document.getElementById(id);
+      }
+
+      // make a element fast
+      function el(tag, cls, text) {
+        var e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text) e.textContent = text;
+        return e;
+      }
+
+      // ---------- stuff that change while playing ----------
+      var quizBox = $("quiz");
+      var qNum = 0;          // what question we on
+      var score = 0;
+      var wrongCount = 0;    // wrong this run
+      var totalWrong = 0;    // wrong ever, only for picking bodo line
+      var who = null;        // "hijab" or "towel"
+      var started = false;
+      var dead = false;
+      var locked = false;    // stop double click on answers
+      var timer = null;
+
+      // bodo pose numbers
+      var POSE = { wave: 0, cheek: 1, cheer: 2, pray: 3, point: 4, wow: 5 };
+
+      // what bodo say after wrong / right answer [pose, text]
+      var WRONG_LINES = [
+        [6, "this quiz is retarded"],
+        [8, "he's gonna leave me for riamu 😭"],
+        [10, "I'm gonna kill myself 😭"],
+        [7, "I'm gonna shoot my coochie"],
+        [9, "istg"],
+        [11, "he'll forgive me trust"]
+      ];
+      var RIGHT_LINES = [
+        [POSE.cheer, "YES"],
+        [POSE.pray, "thank god"],
+        [POSE.wow, "riamu wouldn't guess this"],
+        [POSE.wave, "Slimmyyy"],
+        [POSE.cheer, "gg fugging easy"]
+      ];
+
+      var bodoBox = $("bodo");
+      var bodoImg = $("bodoImg");
+      var bubble = $("bubble");
+      var bodoBtn = $("bodoBtn");
+
+      $("pk1").src = SPR.hijab[POSE.wave];
+      $("pk2").src = SPR.towel[POSE.wave];
+
+      // change bodo picture + text, then make him hop
+      function say(pose, text) {
+        bodoImg.src = SPR[who][pose];
+        bubble.textContent = text;
+        bodoBtn.classList.remove("hop");
+        void bodoBtn.offsetWidth; // this restart the animation
+        bodoBtn.classList.add("hop");
+      }
+
+      function choose(pick) {
+        who = pick;
+        bodoBox.style.display = "flex";
+        $("pickWrap").classList.add("gone");
+        $("quizWrap").style.display = "block";
+
+        if (!started) {
+          started = true;
+          say(POSE.wave, "ok ready");
+          show();
+        } else if (dead) {
+          say(10, "changing outfits won't bring Rediah back");
+          if (who === "hijab") bodoImg.src = CRY;
+        } else {
+          say(POSE.wave, "new fit");
+        }
+      }
+
+      var pickButtons = document.querySelectorAll("#pick button");
+      for (var b = 0; b < pickButtons.length; b++) {
+        (function (btn) {
+          btn.onclick = function () { choose(btn.dataset.k); };
+        })(pickButtons[b]);
+      }
+
+      // click bodo in corner to switch
+      bodoBtn.onclick = function () {
+        choose(who === "hijab" ? "towel" : "hijab");
+      };
+
+      // ---------- sound ----------
+      var audioCtx = null;
+      var muted = false;
+      var muteBtn = $("muteBtn");
+
+      try {
+        muted = localStorage.getItem("rediahMuted") === "1";
+      } catch (e) {}
+
+      function drawMute() {
+        muteBtn.textContent = muted ? "sound off" : "sound on";
+      }
+      drawMute();
+
+      muteBtn.onclick = function () {
+        muted = !muted;
+        drawMute();
+        try {
+          localStorage.setItem("rediahMuted", muted ? "1" : "0");
+        } catch (e) {}
+        syncMusic();
+      };
+
+      function getCtx() {
+        if (!audioCtx) {
+          try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          } catch (e) {}
+        }
+        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+        return audioCtx;
+      }
+
+      // one beep
+      function tone(freq, delay, length, type, vol, slideTo) {
+        var ctx = getCtx();
+        if (!ctx) return;
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        var t = ctx.currentTime + delay;
+        osc.type = type || "square";
+        osc.frequency.setValueAtTime(freq, t);
+        if (slideTo) osc.frequency.linearRampToValueAtTime(slideTo, t + length);
+        gain.gain.setValueAtTime(vol || 0.12, t);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + length);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + length + 0.02);
+      }
+
+      // beeps, only used if the sound file is empty
+      var beeps = {
+        correct: function () {
+          tone(660, 0, 0.1);
+          tone(990, 0.1, 0.2);
+        },
+        wrong: function () {
+          tone(220, 0, 0.3, "sawtooth", 0.12, 130);
+        },
+        cry: function () {
+          [440, 392, 349, 294].forEach(function (f, j) {
+            tone(f, j * 0.3, 0.32, "triangle", 0.16, f * 0.92);
+          });
+        },
+        meh: function () {
+          tone(330, 0, 0.3, "triangle", 0.15);
+          tone(311, 0.33, 0.5, "triangle", 0.15, 262);
+        },
+        blast: function () {
+          tone(110, 0, 0.7, "sawtooth", 0.14, 45);
+          tone(250, 0.15, 0.8, "square", 0.05, 1400);
+        },
+        happy: function () {
+          [523, 659, 784, 1047].forEach(function (f, j) {
+            tone(f, j * 0.12, 0.18, "square", 0.1);
+          });
+          tone(1047, 0.5, 0.45, "square", 0.1);
+        }
+      };
+
+      // background music, starts when she press start
+      var music = new Audio(BGM_SRC);
+      music.loop = true;
+      music.preload = "auto";
+      music.volume = BGM_VOL;
+      music.onerror = function () {
+        console.warn("music not loading:", BGM_SRC, music.error);
+      };
+      var musicOn = false;
+      var musicGain = null;
+      var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+      function syncMusic() {
+        if (!musicOn) return;
+        if (muted) {
+          music.pause();
+          return;
+        }
+        // iphone ignore audio.volume so use gain node only for it
+        if (isIOS && !musicGain) {
+          var ctx = getCtx();
+          if (ctx) {
+            try {
+              musicGain = ctx.createGain();
+              musicGain.gain.value = BGM_VOL;
+              ctx.createMediaElementSource(music).connect(musicGain);
+              musicGain.connect(ctx.destination);
+            } catch (e) {
+              musicGain = null;
+            }
+          }
+        }
+        var p = music.play();
+        if (p && p.catch) {
+          p.catch(function (e) {
+            console.warn("music blocked:", e);
+          });
+        }
+      }
+
+      var effects = {};      // audio objects, one for each sound
+      var nowPlaying = null;
+
+      function getEffect(name) {
+        var url = SOUNDS[name];
+        if (!url) return null;
+        if (!effects[name]) {
+          effects[name] = new Audio(url);
+          effects[name].preload = "auto";
+        }
+        return effects[name];
+      }
+
+      // phones only let sound play after a tap. so play every sound once muted on the start tap
+      function unlockOne(a) {
+        a.muted = true;
+        var p = a.play();
+        if (p && p.then) {
+          p.then(function () {
+            a.pause();
+            a.currentTime = 0;
+            a.muted = false;
+          }).catch(function () {
+            a.muted = false;
+          });
+        } else {
+          a.pause();
+          a.muted = false;
+        }
+      }
+
+      function unlockSounds() {
+        for (var name in SOUNDS) {
+          var a = getEffect(name);
+          if (a) unlockOne(a);
+        }
+      }
+
+      function play(name) {
+        if (muted) return;
+        var a = getEffect(name);
+        if (a) {
+          try {
+            // cut the old sound so they dont overlap
+            if (nowPlaying && nowPlaying !== a) nowPlaying.pause();
+            a.currentTime = 0;
+            nowPlaying = a;
+            var p = a.play();
+            if (p && p.catch) p.catch(function () {});
+          } catch (e) {}
+        } else if (beeps[name]) {
+          beeps[name]();
+        }
+      }
+
+      // ---------- saved runs (leaderboard) ----------
+      var RUNS_KEY = "rediahQuizRuns";
+      var runs = [];
+      try {
+        runs = JSON.parse(localStorage.getItem(RUNS_KEY)) || [];
+      } catch (e) {
+        runs = [];
+      }
+
+      function bestScore() {
+        var best = 0;
+        for (var r = 0; r < runs.length; r++) {
+          if (runs[r].s > best) best = runs[r].s;
+        }
+        return best;
+      }
+
+      // s = score, d = died, t = time, w = which bodo
+      function saveRun() {
+        var run = { s: score, d: dead ? 1 : 0, t: Date.now(), w: who };
+        runs.push(run);
+        try {
+          localStorage.setItem(RUNS_KEY, JSON.stringify(runs.slice(-50)));
+        } catch (e) {}
+        return run;
+      }
+
+      function makeBoard(thisRun) {
+        var total = QUIZ.length;
+        var wrap = el("div", "");
+
+        // best 5, highest first. same score = older first
+        var top = runs.slice().sort(function (a, b) {
+          return b.s - a.s || a.t - b.t;
+        }).slice(0, 5);
+
+        wrap.appendChild(el("p", "q lbh",
+          "leaderboard · attempt " + runs.length + " · best " + bestScore() + "/" + total));
+
+        var list = el("ul", "board");
+
+        function addRow(run, rank) {
+          var li = el("li", run === thisRun ? "me" : "");
+          var label = (rank ? rank + ". " : "") + run.s + "/" + total;
+          if (run.d) label += " (dead)";
+          if (run === thisRun) label += "  ← this run";
+          li.appendChild(el("span", "", label));
+
+          var date = new Date(run.t).toLocaleDateString([], { month: "short", day: "numeric" });
+          li.appendChild(el("small", "", (run.w === "towel" ? "towel" : "hijab") + " · " + date));
+          list.appendChild(li);
+        }
+
+        top.forEach(function (run, k) { addRow(run, k + 1); });
+        // if this run not in top 5 show it at the bottom anyway
+        if (thisRun && top.indexOf(thisRun) < 0) addRow(thisRun, 0);
+
+        wrap.appendChild(list);
+        return wrap;
+      }
+
+      function shuffle(arr) {
+        for (var j = arr.length - 1; j > 0; j--) {
+          var k = Math.floor(Math.random() * (j + 1));
+          var tmp = arr[j];
+          arr[j] = arr[k];
+          arr[k] = tmp;
+        }
+        return arr;
+      }
+
+      if (runs.length) {
+        $("stats").textContent =
+          "attempt " + (runs.length + 1) + " · best so far " + bestScore() + "/" + QUIZ.length;
+      }
+
+      // ---------- start + loading screen ----------
+      function goPick() {
+        $("loadWrap").classList.add("gone");
+        $("pickWrap").classList.remove("gone");
+      }
+
+      // brown puffs when she launch (only for the fly version)
+      function makePuffs(stage) {
+        for (var j = 0; j < 6; j++) {
+          var puff = document.createElement("i");
+          puff.className = "puff";
+          puff.style.left = (50 + Math.random() * 16) + "%";
+          puff.style.top = (80 + Math.random() * 10) + "%";
+          puff.style.setProperty("--dx", ((Math.random() - 0.5) * 160) + "%");
+          puff.style.setProperty("--dy", (-30 + Math.random() * 70) + "%");
+          puff.style.setProperty("--pd", (0.9 + Math.random() * 0.6) + "s");
+          puff.style.setProperty("--pl", (Math.random() * 0.15) + "s");
+          stage.appendChild(puff);
+          void puff.offsetWidth;
+          puff.classList.add("go");
+        }
+      }
+
+      $("startBtn").onclick = function () {
+        getCtx();
+        unlockSounds();
+        musicOn = true;
+        syncMusic();
+        $("startWrap").style.display = "none";
+
+        var L = LOADING;
+        if (!L || !L.seconds) {
+          goPick();
+          return;
+        }
+
+        var wrap = $("loadWrap");
+        var bar = $("loadBar");
+        var text = $("loadTxt");
+        var pic = $("loadImg");
+        var stage = $("loadStage");
+        var fly = $("loadFly");
+
+        if (L.img) {
+          pic.src = L.img;
+          stage.style.display = "block";
+        }
+
+        // gif version. play the fart at the right time.
+        // blastAt = second in the gif she launch. blastLead = the empty part at start of fart file
+        // timer start when gif is loaded, not when she tap start
+        if (L.img && !L.fly && L.blastAt) {
+          var armed = false;
+          var arm = function () {
+            if (armed) return;
+            armed = true;
+            var wait = Math.max(0, (L.blastAt - (L.blastLead || 0)) * 1000);
+            setTimeout(function () { play("blast"); }, wait);
+          };
+          pic.onload = arm;
+          pic.onerror = arm;
+          if (pic.complete && pic.naturalWidth) arm();
+        }
+
+        // css version (no gif). shake, shake more, then launch
+        if (L.img && L.fly) {
+          fly.src = L.fly;
+          fly.style.display = "block";
+          fly.classList.add("r1");
+
+          setTimeout(function () {
+            fly.classList.remove("r1");
+            fly.classList.add("r2");
+            stage.classList.add("r2");
+          }, L.seconds * 500);
+
+          setTimeout(function () {
+            fly.classList.remove("r2");
+            stage.classList.remove("r2");
+            fly.style.setProperty("--fly", (L.seconds * 0.19) + "s");
+            fly.classList.add("blast");
+            play("blast");
+            makePuffs(stage);
+          }, L.seconds * 800);
+        }
+
+        wrap.classList.remove("gone");
+
+        // fill the bar and change the text
+        var startTime = Date.now();
+        var totalMs = L.seconds * 1000;
+        var lines = (L.lines && L.lines.length) ? L.lines : [""];
+        var lastLine = -1;
+
+        var loop = setInterval(function () {
+          var p = Math.min(1, (Date.now() - startTime) / totalMs);
+          bar.style.width = (p * 100) + "%";
+
+          var idx = Math.min(lines.length - 1, Math.floor(p * lines.length));
+          if (idx !== lastLine) {
+            lastLine = idx;
+            text.textContent = lines[idx];
+          }
+
+          if (p >= 1) {
+            clearInterval(loop);
+            setTimeout(goPick, 250);
+          }
+        }, 50);
+      };
+
+      // ---------- game over ----------
+      function gameOver() {
+        clearInterval(timer);
+        quizBox.innerHTML = "";
+
+        var grave = el("div", "");
+        grave.id = "grave";
+
+        var pic = new Image();
+        pic.src = TOMB;
+        pic.alt = "Game over";
+        grave.appendChild(pic);
+
+        var msg = el("div", "gmsg");
+        msg.appendChild(el("p", "q", "game over"));
+
+        dead = true;
+        saveRun();
+        play("cry");
+
+        msg.appendChild(el("p", "", wrongCount + " wrong. rip."));
+        msg.appendChild(el("p", "",
+          "attempt " + runs.length + " · best " + bestScore() + "/" + QUIZ.length));
+
+        var retry = el("button", "next", "try again");
+        retry.onclick = function () {
+          grave.remove();
+          dead = false;
+          qNum = 0;
+          score = 0;
+          wrongCount = 0;
+          quizBox.className = "quiz";
+          show();
+        };
+        msg.appendChild(retry);
+        grave.appendChild(msg);
+        document.body.appendChild(grave);
+        retry.focus();
+
+        say(10, "hate you bodo. (not really)");
+        if (who === "hijab") bodoImg.src = CRY;
+      }
+
+      // ---------- video bg on score screen ----------
+      var scoreBg = $("scoreBg");
+      scoreBg.muted = true;
+      scoreBg.onerror = function () {
+        scoreBg.style.display = "none";
+      };
+
+      // pass wrong count to show video. pass "" to hide it
+      function setScoreBg(k) {
+        var url = (k === "" || k == null) ? "" : BG[k];
+        if (url) {
+          scoreBg.src = url;
+          scoreBg.style.display = "block";
+          var p = scoreBg.play();
+          if (p && p.catch) p.catch(function () {});
+        } else {
+          scoreBg.pause();
+          scoreBg.style.display = "none";
+          scoreBg.removeAttribute("src");
+        }
+      }
+
+      // ---------- quiz ----------
+      function show() {
+        clearInterval(timer);
+        quizBox.innerHTML = "";
+        locked = false;
+
+        if (qNum >= QUIZ.length) {
+          showScore();
+        } else {
+          showQuestion();
+        }
+      }
+
+      function showScore() {
+        var n = QUIZ.length;
+        setScoreBg(wrongCount);
+
+        var msg;
+        if (score === n) msg = "5/5. ok i know him";
+        else if (score >= n / 2) msg = "not bad. i have 3 years to learn the rest";
+        else msg = "i need more calls";
+
+        if (score === n) say(POSE.cheer, "perfect");
+        else if (score >= n / 2) say(POSE.cheer, "not bad");
+        else say(9, "oops");
+
+        quizBox.appendChild(el("p", "score", score + " / " + n));
+        quizBox.appendChild(el("p", "", msg));
+
+        // extra stuff from REWARDS, if there is any
+        var reward = REWARDS[wrongCount];
+        if (reward && (reward.text || reward.img || reward.audio)) {
+          var box = el("div", "reward");
+          if (reward.text) box.appendChild(el("p", "", reward.text));
+          if (reward.img) {
+            var pic = new Image();
+            pic.src = reward.img;
+            pic.alt = "";
+            box.appendChild(pic);
+          }
+          if (reward.audio) {
+            var audio = document.createElement("audio");
+            audio.controls = true;
+            audio.src = reward.audio;
+            box.appendChild(audio);
+          }
+          quizBox.appendChild(box);
+        }
+
+        if (score >= 4) play("happy");
+        else if (score === 3) play("meh");
+        else play("cry");
+
+        var thisRun = saveRun();
+        quizBox.appendChild(makeBoard(thisRun));
+
+        var again = el("button", "next again", "again");
+        again.onclick = function () {
+          qNum = 0;
+          score = 0;
+          wrongCount = 0;
+          show();
+        };
+        quizBox.appendChild(again);
+      }
+
+      function drawHearts(holder) {
+        holder.innerHTML = "";
+        for (var j = 0; j < MAX_WRONG; j++) {
+          var lost = j >= MAX_WRONG - wrongCount;
+          holder.appendChild(el("span", lost ? "lost" : "", "♥"));
+        }
+      }
+
+      // a option can be:  "text"   or   { text: "..." }   or   { img: "assets/a.jpg", label: "words" }
+      // any option can also have  note: "message"  that show at the bottom when she pick it
+      function isPic(opt) {
+        return typeof opt === "object" && opt.img;
+      }
+
+      // the words of a option
+      function optionText(opt) {
+        if (typeof opt === "string") return opt;
+        if (opt.text) return opt.text;
+        return opt.label || "the highlighted one";
+      }
+
+      function makeOption(opt) {
+        var btn = el("button", "");
+        if (!isPic(opt)) {
+          btn.textContent = optionText(opt);
+          return btn;
+        }
+        btn.className = "withimg";
+        var pic = new Image();
+        pic.src = opt.img;
+        pic.alt = opt.label || "";
+        btn.appendChild(pic);
+        if (opt.label) btn.appendChild(el("span", "", opt.label));
+        return btn;
+      }
+
+      function showQuestion() {
+        var Q = QUIZ[qNum];
+        var isText = Q.type === "text";
+        setScoreBg("");
+        if (qNum > 0) say(POSE.point, "next one");
+
+        // top line: question number + hearts
+        var top = el("p", "prog", (qNum + 1) + "/" + QUIZ.length);
+        var hearts = el("span", "hearts");
+        hearts.setAttribute("aria-label", "lives left");
+        top.appendChild(hearts);
+        quizBox.appendChild(top);
+        drawHearts(hearts);
+
+        quizBox.appendChild(el("p", "q", Q.q));
+        var options = el("div", "opts");
+        quizBox.appendChild(options);
+        if (!isText && Q.o.some(isPic)) options.classList.add("pics");
+        var feedback = el("p", "fb");
+        quizBox.appendChild(feedback);
+
+        var buttons = [];   // buttons[k] is the button for Q.o[k]
+        var input = null;
+        var submitBtn = null;
+
+        // text question: is what she typed right?
+        function textIsRight(typed) {
+          if (!Q.accept || !Q.accept.length) return true;
+          var t = typed.trim().toLowerCase();
+          return Q.accept.some(function (a) {
+            return String(a).trim().toLowerCase() === t;
+          });
+        }
+
+        // choice = number of the option she click. -1 = time ran out
+        // for a text question, any choice >= 0 means she pressed submit
+        function answer(choice, clicked) {
+          if (locked) return;
+          locked = true;
+          clearInterval(timer);
+
+          var right, note = "", correctText;
+          if (isText) {
+            right = choice >= 0 && textIsRight(input.value);
+            correctText = (Q.accept && Q.accept[0]) || "";
+            input.disabled = true;
+            submitBtn.disabled = true;
+          } else {
+            buttons[Q.a].classList.add("ok");
+            right = choice === Q.a;
+            correctText = optionText(Q.o[Q.a]);
+            // the option she picked, to get its note. choice -1 = time out so no option
+            var picked = choice >= 0 ? Q.o[choice] : null;
+            note = (picked && picked.note) || "";
+          }
+
+          if (right) {
+            var line = RIGHT_LINES[score % RIGHT_LINES.length];
+            score++;
+            feedback.textContent = note || Q.right || "correct";
+            say(line[0], line[1]);
+            play("correct");
+          } else {
+            if (clicked) clicked.classList.add("no");
+            if (choice < 0) {
+              feedback.textContent = Q.late || "time's up. it was " + correctText;
+            } else {
+              feedback.textContent = note || Q.wrong || "nope. it was " + correctText;
+            }
+            var wrongLine = WRONG_LINES[totalWrong % WRONG_LINES.length];
+            totalWrong++;
+            wrongCount++;
+            drawHearts(hearts);
+            play("wrong");
+
+            if (wrongCount >= MAX_WRONG) say(10, "that's too many");
+            else if (choice < 0) say(9, "too slow");
+            else say(wrongLine[0], wrongLine[1]);
+          }
+
+          var over = wrongCount >= MAX_WRONG;
+          var label;
+          if (over) label = "Oh no...";
+          else if (qNum === QUIZ.length - 1) label = "see score";
+          else label = "next";
+
+          var next = el("button", "next", label);
+          next.onclick = function () {
+            if (over) {
+              gameOver();
+            } else {
+              qNum++;
+              show();
+            }
+          };
+          // wait a bit before next can be pressed so she can read the message
+          // (also stops the Enter key from the text box instantly hitting next)
+          next.disabled = true;
+          next.style.opacity = ".5";
+          quizBox.appendChild(next);
+          if (input) input.blur();
+          setTimeout(function () {
+            next.disabled = false;
+            next.style.opacity = "";
+            next.focus();
+          }, NEXT_DELAY * 1000);
+        }
+
+        // timer bar. a question can have its own time with t
+        var seconds = (Q.t != null) ? Q.t : TIME_LIMIT;
+        if (seconds > 0) {
+          var bar = el("div", "tbar");
+          var fill = document.createElement("i");
+          bar.appendChild(fill);
+          quizBox.insertBefore(bar, options);
+
+          var begin = Date.now();
+          timer = setInterval(function () {
+            var left = seconds - (Date.now() - begin) / 1000;
+            fill.style.width = Math.max(0, left / seconds * 100) + "%";
+            bar.classList.toggle("low", left <= Math.min(5, seconds / 3));
+            if (left <= 0) answer(-1, null);   // time out = wrong
+          }, 100);
+        }
+
+        if (isText) {
+          // text box + submit button
+          var row = el("div", "txt");
+          input = document.createElement("input");
+          input.type = "text";
+          input.placeholder = "type your answer...";
+          input.autocomplete = "off";
+          input.setAttribute("aria-label", "your answer");
+
+          submitBtn = el("button", "", "submit");
+          submitBtn.type = "button";
+
+          var submit = function () {
+            if (!input.value.trim()) return;   // ignore empty
+            answer(0, null);
+          };
+          submitBtn.onclick = submit;
+          input.onkeydown = function (e) {
+            if (e.key === "Enter") submit();
+          };
+
+          row.appendChild(input);
+          row.appendChild(submitBtn);
+          options.appendChild(row);
+          input.focus();
+        } else {
+          // shuffle the options. but not if one of them say "all of the above"
+          var order = Q.o.map(function (_, j) { return j; });
+          var hasAllOfAbove = Q.o.some(function (text) {
+            return /all of the above/i.test(optionText(text));
+          });
+          if (!hasAllOfAbove) shuffle(order);
+
+          order.forEach(function (k) {
+            var btn = makeOption(Q.o[k]);
+            buttons[k] = btn;
+            btn.onclick = function () { answer(k, btn); };
+            options.appendChild(btn);
+          });
+        }
+      }
+
+    })();
+  </script>
+</body>
+</html>
